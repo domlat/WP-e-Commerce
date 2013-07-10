@@ -169,6 +169,9 @@ function _wpsc_force_download_file( $file_id ) {
 	$file_path = WPSC_FILE_DIR . $file_name;
 
 	if ( is_file( $file_path ) ) {
+		while (ob_get_level()) { // anything in the output buffer will corrupt the file download, so dump it
+			ob_end_clean();      // and turn buffering off - can exhaust memory with large files
+		} 
 		if( !ini_get('safe_mode') ) set_time_limit(0);
 		header( 'Content-Type: ' . $file_data->post_mime_type );
 		header( 'Content-Length: ' . filesize( $file_path ) );
