@@ -730,7 +730,7 @@ function wpsc_also_bought( $product_id ) {
 				// Ideally use the wpsc_the_product_price_display() function here but needs some tweaking
 				$price = get_product_meta( $also_bought_data['ID'], 'price', true );
 				$special_price = get_product_meta( $also_bought_data['ID'], 'special_price', true );
-				if ( ! empty( $special_price ) ) {
+				if ( ! empty( $special_price ) &&  $special_price < $price ) {
 					$output .= '<span style="text-decoration: line-through;">' . wpsc_currency_display( $price ) . '</span>';
 					$output .= wpsc_currency_display( $special_price );
 				} else {
